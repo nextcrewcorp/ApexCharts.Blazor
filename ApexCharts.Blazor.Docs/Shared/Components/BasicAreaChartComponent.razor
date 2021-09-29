@@ -1,0 +1,75 @@
+﻿<Chart Configuration="@config" Series="@series"></Chart>
+
+@code {
+	public ChartConfiguration config = new ChartConfiguration()
+		.SetChart(
+			new ChartOptions()
+			.SetType(ChartType.Area)
+			.SetHeight("350px")
+			.SetZoom(
+				new ZoomOptions()
+				.SetIsEnabled(false)
+			)
+		)
+		.SetDataLabels(
+			new DataLabelsOptions()
+			.SetIsEnabled(false)
+		)
+		.SetStroke(
+			new StrokeOptions()
+			.SetCurve(StrokeCurve.Straight)
+		)
+		.SetTitle(
+			new TitleOptions()
+			.SetText("Fundamental Analysis of Stocks")
+			.SetAlign(HorizontalAlignment.Left)
+		)
+		.SetSubtitle(
+			new TitleOptions()
+			.SetText("Price Movements")
+			.SetAlign(HorizontalAlignment.Left)
+		)
+		.SetXAxis(
+			new XAxisOptions()
+			.SetType(XAxisType.DateTime)
+		)
+		.AddYAxis(
+			new YAxisOptions()
+			.SetOpposite(true)
+		)
+		.SetLegend(
+			new LegendOptions()
+			.SetHorizontalAlign(HorizontalAlignment.Center)
+		);
+
+	public List<BaseSeries> series = new List<BaseSeries>
+	{
+		new Series
+		{
+			Name = "Stock ABC",
+			Type = ChartType.Area,
+			Data = CategoryDataItem.FromDictionary(new Dictionary<string, decimal?>
+			{
+				{ "13 Nov 17", 8107.85M },
+				{ "14 Nov 17", 8128M },
+				{ "15 Nov 17", 8122.9M },
+				{ "16 Nov 17", 8165.5M },
+				{ "17 Nov 17", 8340.7M },
+				{ "20 Nov 17", 8423.7M },
+				{ "21 Nov 17", 8514.3M },
+				{ "22 Nov 17", 8481.85M },
+				{ "23 Nov 17", 8487.7M },
+				{ "24 Nov 17", 8506.9M },
+				{ "27 Nov 17", 8626.2M },
+				{ "28 Nov 17", 8668.95M },
+				{ "29 Nov 17", 8602.3M },
+				{ "30 Nov 17", 8607.55M },
+				{ "01 Dec 17", 8512.9M },
+				{ "04 Dec 17", 8496.25M },
+				{ "05 Dec 17", 8600.65M },
+				{ "06 Dec 17", 8881.1M },
+				{ "07 Dec 17", 9340.85M },
+			})
+		}
+	};
+}

@@ -1,0 +1,139 @@
+﻿@page "/mixed-charts/line-and-column"
+
+@inject IJSRuntime JSRuntime
+
+<h1>Line and Column Chart</h1>
+
+<Chart Configuration="@config" Series="@series"></Chart>
+
+<pre><code class="language-html">&lt;Chart Configuration="@@config" Series="@@series"&gt;&lt;/Chart&gt;</code></pre>
+<pre><code class="language-csharp">@@code {
+	ChartConfiguration config = new ChartConfiguration
+	{
+		Chart = new ChartOptions
+		{
+			Type = ChartType.Line,
+			Height = "350px",
+			Width = "650px"
+		},
+		Stroke = new StrokeOptions
+		{
+			Width = new int[] { 0, 4 }
+		},
+		DataLabels = new DataLabelsOptions
+		{
+			IsEnabled = true,
+			IsEnabledOnSeries = new int[] { 1 }
+		},
+		Title = new TitleOptions
+		{
+			Text = "Traffic Sources"
+		},
+		XAxis = new XAxisOptions
+		{
+			Type = XAxisType.DateTime
+		},
+		YAxis = YAxisOptions.CreateDouble(
+			new YAxisOptions()
+			.SetTitle(
+				new YAxisTitle()
+				.SetText("Website Blog")
+			),
+			new YAxisOptions()
+			.SetOpposite(true)
+			.SetTitle(
+				new YAxisTitle()
+				.SetText("Social Media")
+			)
+		),
+		Labels = new string[] { "01 Jan 2001", "02 Jan 2001", "03 Jan 2001", "04 Jan 2001", "05 Jan 2001", "06 Jan 2001", "07 Jan 2001", 
+			"08 Jan 2001", "09 Jan 2001", "10 Jan 2001", "11 Jan 2001", "12 Jan 2001" }
+	};
+
+	List&lt;Series&gt; series = new List&lt;Series&gt;
+	{
+		new Series
+		{
+			Name = "Website Blog",
+			Type = ChartType.Column,
+			Data = NumericDataItem.FromArray(new decimal?[] { 440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160 })
+		},
+		new Series
+		{
+			Name = "Social Media",
+			Type = ChartType.Line,
+			Data = NumericDataItem.FromArray(new decimal?[] { 23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16 })
+		}
+	};
+}</code></pre>
+
+@code {
+	ChartConfiguration config = new ChartConfiguration()
+		.SetChart(
+			new ChartOptions()
+			.SetType(ChartType.Line)
+			.SetHeight("350px")
+			//.SetWidth("650px")
+		)
+		.SetStroke(
+			new StrokeOptions()
+			.SetWidths(new int[] { 0, 4 })
+		)
+		.SetDataLabels(
+			new DataLabelsOptions()
+			.SetIsEnabled(true)
+			.SetIsEnabledOnSeries(new int[] { 1 })
+		)
+		.SetTitle(
+			new TitleOptions()
+			.SetText("Traffic Sources")
+		)
+		.SetXAxis(
+			new XAxisOptions()
+			.SetType(XAxisType.DateTime)
+		)
+		.AddYAxis(
+			new YAxisOptions()
+			.SetTitle(
+				new YAxisTitle()
+				.SetText("Website Blog")
+			)
+		)
+		.AddYAxis(
+			new YAxisOptions()
+			.SetOpposite(true)
+			.SetTitle(
+				new YAxisTitle()
+				.SetText("Social Media")
+			)
+		)
+		.SetLabels(new string[] { "01 Jan 2001", "02 Jan 2001", "03 Jan 2001", "04 Jan 2001", "05 Jan 2001", 
+			"06 Jan 2001", "07 Jan 2001", "08 Jan 2001", "09 Jan 2001", "10 Jan 2001", "11 Jan 2001", "12 Jan 2001" });
+
+	List<BaseSeries> series = new List<BaseSeries>
+	{
+		new Series
+		{
+			Name = "Website Blog",
+			Type = ChartType.Column,
+			Data = NumericDataItem.FromArray(new decimal?[] { 440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160 })
+		},
+		new Series
+		{
+			Name = "Social Media",
+			Type = ChartType.Line,
+			Data = NumericDataItem.FromArray(new decimal?[] { 23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16 })
+		}
+	};
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await base.OnAfterRenderAsync(firstRender);
+
+		if (firstRender)
+		{
+			((JSInProcessRuntime)JSRuntime).InvokeVoid("Prism.highlightAll");
+		}
+	}
+
+}

@@ -1,0 +1,96 @@
+﻿@page "/"
+
+@inject IJSRuntime JSRuntime
+
+<h1>Getting Started</h1>
+
+Let's get started using BlazorCharts!
+<br><br>
+First, we need to install the BlazorCharts nuget package.
+<div class="language-html"><pre><code class="language-html">dotnet add package ApexCharts.Blazor</code></pre></div>
+
+<br>
+After the package is installed, you need to add the following into your <code class="language-html">_Imports.razor</code> file.
+<pre><code class="language-html">@@using ApexCharts.Blazor</code></pre>
+
+<br>
+Add the javascript reference in <code class="language-html">index.html</code> or <code class="language-html">_Host.cshtml</code>.
+<pre><code class="language-html">&lt;script src="https://cdn.jsdelivr.net/npm/apexcharts"&gt;&lt;/script&gt;</code></pre>
+
+<Chart Configuration="@config" Series="@series"></Chart>
+
+<pre><code class="language-html">&lt;Chart ChartOptions="@@chartOptions" Series="@@series"&gt;&lt;/Chart&gt;</code></pre>
+<pre><code class="language-csharp">@@code {
+	ChartConfiguration config = new ChartConfiguration
+	{
+		Chart = new ChartOptions
+		{
+			Height = "350px"
+		}
+	};
+
+	List&lt;Series&gt; series = new List&lt;Series&gt;
+	{
+		new Series
+		{
+			Name = "Desktops",
+			Type = ChartType.Line,
+			Data = new List&lt;DataItem&gt;
+			{
+				new CategoryDataItem("Jan", 10),
+				new CategoryDataItem("Feb", 41),
+				new CategoryDataItem("Mar", 35),
+				new CategoryDataItem("Apr", 51),
+				new CategoryDataItem("May", 49),
+				new CategoryDataItem("Jun", 62),
+				new CategoryDataItem("Jul", 69),
+				new CategoryDataItem("Aug", 91),
+				new CategoryDataItem("Sep", 148),
+			}
+		}
+	};
+}</code></pre>
+
+<br>
+Please check out the ApexCharts documentation as well: <a href="https://apexcharts.com/docs/" target="_blank">https://apexcharts.com/docs/</a>
+
+@code {
+	ChartConfiguration config = new ChartConfiguration
+	{
+		Chart = new ChartOptions
+		{
+			Height = "350px"
+		}
+	};
+
+	List<BaseSeries> series = new List<BaseSeries>
+	{
+		new Series
+		{
+			Name = "Desktops",
+			Type = ChartType.Line,
+			Data = new List<DataItem>
+			{
+				new CategoryDataItem("Jan", 10),
+				new CategoryDataItem("Feb", 41),
+				new CategoryDataItem("Mar", 35),
+				new CategoryDataItem("Apr", 51),
+				new CategoryDataItem("May", 49),
+				new CategoryDataItem("Jun", 62),
+				new CategoryDataItem("Jul", 69),
+				new CategoryDataItem("Aug", 91),
+				new CategoryDataItem("Sep", 148),
+			}
+		}
+	};
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await base.OnAfterRenderAsync(firstRender);
+
+		if (firstRender)
+		{
+			((JSInProcessRuntime)JSRuntime).InvokeVoid("Prism.highlightAll");
+		}
+	}
+}

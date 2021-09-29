@@ -1,0 +1,53 @@
+﻿@page "/column-charts/basic"
+
+@inject IJSRuntime JSRuntime
+
+<h1>Basic Column Chart</h1>
+
+<BasicColumnChartComponent @ref="component"></BasicColumnChartComponent>
+
+<pre><code class="language-html">&lt;Chart Configuration="@@config" Series="@@series"&gt;&lt;/Chart&gt;</code></pre>
+<pre><code class="language-csharp">@generatedCode</code></pre>
+
+@code {
+	BasicColumnChartComponent component;
+	string generatedCode;
+	string nl = Environment.NewLine;
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await base.OnAfterRenderAsync(firstRender);
+
+		if (firstRender)
+		{
+			var fields = typeof(BasicColumnChartComponent).GetFields();
+
+			string config = string.Empty;
+			string series = string.Empty;
+
+			foreach (var field in fields)
+			{
+				var value = field.GetValue(component);
+
+				if (value is ChartConfiguration)
+				{
+					config = (value as ChartConfiguration).ToCodeString();
+				}
+				else if (value is List<BaseSeries>)
+				{
+					series = (value as List<BaseSeries>).ToCodeString();
+				}
+			}
+
+			generatedCode = $"@code {{{nl}{config}{nl}{nl}{series}{nl}}}";				
+			StateHasChanged();
+
+			await Task.Run(() =>
+			{
+				Task.Delay(250);
+				((JSInProcessRuntime)JSRuntime).InvokeVoid("Prism.highlightAll");
+			});
+		}
+	}
+
+}

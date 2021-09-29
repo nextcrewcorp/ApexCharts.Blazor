@@ -1,0 +1,99 @@
+﻿@page "/bar-charts/basic"
+
+@inject IJSRuntime JSRuntime
+
+<h1>Basic Column Chart</h1>
+
+<Chart Configuration="@config" Series="@series"></Chart>
+
+<pre><code class="language-html">&lt;Chart Configuration="@@config" Series="@@series"&gt;&lt;/Chart&gt;</code></pre>
+<pre><code class="language-csharp">@@code {
+	ChartConfiguration config = new ChartConfiguration
+	{
+		Chart = new ChartOptions
+		{
+			Type = ChartType.Bar,
+			Height = "350px",
+			Width = "650px",
+			Zoom = new ZoomOptions
+			{
+				IsEnabled = false
+			}
+		},
+		DataLabels = new DataLabelsOptions
+		{
+			IsEnabled = false
+		},
+		XAxis = new XAxisOptions
+		{
+			Categories = new string[] { "South Korea", "Canada", "United Kingdom", "Netherlands", "Italy", "France", "Japan",
+            "United States", "China", "Germany" }
+		},
+		Plot = new PlotOptions
+		{
+			Bar = new BarPlotOptions
+			{
+				Horizontal = true,
+				BorderRadius = 4
+			}
+		}
+	};
+
+	List&lt;Series&gt; series = new List&lt;Series&gt;
+	{
+		new Series
+		{
+			Data = NumericDataItem.FromArray(new decimal?[] { 400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380 })
+		}
+	};
+}</code></pre>
+
+@code {
+	ChartConfiguration config = new ChartConfiguration()
+		.SetChart(
+			new ChartOptions()
+			.SetType(ChartType.Bar)
+			.SetHeight("350px")
+			.SetWidth("650px")
+			.SetZoom(
+				new ZoomOptions()
+				.SetIsEnabled(false)
+			)
+		)
+		.SetDataLabels(
+			new DataLabelsOptions()
+			.SetIsEnabled(false)
+		)
+		.SetXAxis(
+			new XAxisOptions()
+			.SetCategories(new string[] { "South Korea", "Canada", "United Kingdom", "Netherlands", "Italy", "France", "Japan",
+		"United States", "China", "Germany" })
+		)
+		.SetPlot(
+			new PlotOptions()
+			.SetBar(
+				new BarPlotOptions()
+				.SetHorizontal(true)
+				.SetBorderRadius(4)
+			)
+		);
+
+	List<BaseSeries> series = new List<BaseSeries>
+	{
+		new Series
+		{
+			Data = NumericDataItem.FromArray(new decimal?[] { 400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380 })
+		}
+	};
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await base.OnAfterRenderAsync(firstRender);
+
+		if (firstRender)
+		{
+			((JSInProcessRuntime)JSRuntime).InvokeVoid("Prism.highlightAll");
+		}
+	}
+
+}

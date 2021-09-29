@@ -1,0 +1,84 @@
+﻿<Chart Configuration="@config" Series="@series"></Chart>
+
+@code {
+	public ChartConfiguration config = new ChartConfiguration()
+		.SetChart(
+			new ChartOptions()
+			.SetType(ChartType.Bar)
+			.SetHeight("350px")
+			.SetZoom(
+				new ZoomOptions()
+				.SetIsEnabled(false)
+			)
+		)
+		.SetDataLabels(
+			new DataLabelsOptions()
+			.SetIsEnabled(false)
+		)
+		.SetStroke(
+			new StrokeOptions()
+			.SetShow(true)
+			.AddWidth(2)
+			.AddColor("transparent")
+		)
+		.SetTitle(
+			new TitleOptions()
+			.SetText("Fundamental Analysis of Stocks")
+			.SetAlign(HorizontalAlignment.Left)
+		)
+		.SetSubtitle(
+			new TitleOptions()
+			.SetText("Price Movements")
+			.SetAlign(HorizontalAlignment.Left)
+		)
+		.SetXAxis(
+			new XAxisOptions()
+			.SetCategories(new string[] { "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct" })
+		)
+		.AddYAxis(
+			new YAxisOptions()
+			.SetTitle(
+				new YAxisTitle()
+				.SetText("$ (thousands)")
+			)
+		)
+		.SetPlot(
+			new PlotOptions()
+			.SetBar(
+				new BarPlotOptions()
+				.SetHorizontal(false)
+				.SetColumnWidth("55%")
+			)
+		)
+		.SetFill(
+			new FillOptions()
+			.SetOpacity(.9)
+		)
+		.SetTooltip(
+			new TooltipOptions()
+			.SetYFormatExpression("return '$ ' + val + ' thousands'")
+		);
+
+	public List<BaseSeries> series = new List<BaseSeries>
+	{
+		new Series
+		{
+			Name = "Net Profit",
+			Type = ChartType.Bar,
+			Data = NumericDataItem.FromArray(new decimal?[] { 44, 55, 57, 56, 61, 58, 63, 60, 66 })
+		},
+		new Series
+		{
+			Name = "Revenue",
+			Type = ChartType.Bar,
+			Data = NumericDataItem.FromArray(new decimal?[] { 76, 85, 101, 98, 87, 105, 91, 114, 94 })
+		},
+		new Series
+		{
+			Name = "Free Cash Flow",
+			Type = ChartType.Bar,
+			Data = NumericDataItem.FromArray(new decimal?[] { 35, 41, 36, 26, 45, 48, 52, 53, 41 })
+		},
+	};
+
+}

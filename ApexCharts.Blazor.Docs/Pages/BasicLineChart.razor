@@ -1,0 +1,77 @@
+﻿@page "/line-charts/basic"
+
+@inject IJSRuntime JSRuntime
+
+<h1>Basic Line Chart</h1>
+
+<BasicLineChartComponent></BasicLineChartComponent>
+
+<pre><code class="language-html">&lt;Chart Configuration="@@config" Series="@@series"&gt;&lt;/Chart&gt;</code></pre>
+<pre><code class="language-csharp">@@code {
+	ChartConfiguration config = new ChartConfiguration
+	{
+		Chart = new ChartOptions
+		{
+			Height = "350px",
+			Zoom = new ZoomOptions
+			{
+				IsEnabled = false
+			}
+		},
+		DataLabels = new DataLabelsOptions
+		{
+			IsEnabled = false
+		},
+		Stroke = new StrokeOptions
+		{
+			Curve = StrokeCurve.Smooth
+		},
+		Title = new TitleOptions
+		{
+			Text = "Product Trends by Month",
+			Align = HorizontalAlignment.Left
+		},
+		Grid = new GridOptions
+		{
+			Row = new GridRowOptions
+			{
+				Colors = new string[] { "#f3f3f3", "transparent" },
+				Opacity = 0.5M
+			}
+		}
+	};
+
+	List&lt;Series&gt; series = new List&lt;Series&gt;
+	{
+		new Series
+		{
+			Name = "Desktops",
+			Type = ChartType.Line,
+			Data = new List&lt;DataItem&gt;
+			{
+				new CategoryDataItem("Jan", 10),
+				new CategoryDataItem("Feb", 41),
+				new CategoryDataItem("Mar", 35),
+				new CategoryDataItem("Apr", 51),
+				new CategoryDataItem("May", 49),
+				new CategoryDataItem("Jun", 62),
+				new CategoryDataItem("Jul", 69),
+				new CategoryDataItem("Aug", 91),
+				new CategoryDataItem("Sep", 148),
+			}
+		}
+	};
+}</code></pre>
+
+@code {
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await base.OnAfterRenderAsync(firstRender);
+
+		if (firstRender)
+		{
+			((JSInProcessRuntime)JSRuntime).InvokeVoid("Prism.highlightAll");
+		}
+	}
+
+}

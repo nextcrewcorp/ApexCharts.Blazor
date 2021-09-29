@@ -1,0 +1,80 @@
+﻿@page "/pie-charts/basic"
+
+@inject IJSRuntime JSRuntime
+
+<h1>Basic Pie Chart</h1>
+
+<Chart Configuration="@config" Series="@series"></Chart>
+
+<pre><code class="language-html">&lt;Chart Configuration="@@config" Series="@@series"&gt;&lt;/Chart&gt;</code></pre>
+<pre><code class="language-csharp">@@code {
+	ChartConfiguration config = new ChartConfiguration()
+		.SetChart(
+			new ChartOptions()
+			.SetType(ChartType.Pie)
+			.SetWidth("380px")
+		)
+		.SetLabels(new string[] { "Team A", "Team B", "Team C", "Team D", "Team E" })
+		.AddResponsive(
+			new ResponsiveOptions()
+			.SetBreakpoint(480)
+			.SetOptions(
+				new ChartConfiguration()
+				.SetChart(
+					new ChartOptions()
+					.SetWidth("200px")
+				)
+				.SetLegend(
+					new LegendOptions()
+					.SetPosition(Position.Bottom)
+				)
+			)
+		);
+
+	List&lt;BaseSeries&gt; series = new List&lt;BaseSeries&gt;
+	{
+		new SimpleSeries(new double?[] { 44, 55, 13, 43, 22 })
+	};
+
+}</code></pre>
+
+@code {
+	ChartConfiguration config = new ChartConfiguration()
+		.SetChart(
+			new ChartOptions()
+			.SetType(ChartType.Pie)
+			.SetWidth("380px")
+		)
+		.SetLabels(new string[] { "Team A", "Team B", "Team C", "Team D", "Team E" })
+		.AddResponsive(
+			new ResponsiveOptions()
+			.SetBreakpoint(480)
+			.SetOptions(
+				new ChartConfiguration()
+				.SetChart(
+					new ChartOptions()
+					.SetWidth("200px")
+				)
+				.SetLegend(
+					new LegendOptions()
+					.SetPosition(Position.Bottom)
+				)
+			)
+		);
+
+	List<BaseSeries> series = new List<BaseSeries>
+	{
+		new SimpleSeries(new double?[] { 44, 55, 13, 43, 22 })
+	};
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await base.OnAfterRenderAsync(firstRender);
+
+		if (firstRender)
+		{
+			((JSInProcessRuntime)JSRuntime).InvokeVoid("Prism.highlightAll");
+		}
+	}
+
+}
