@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.9.0-alpha</Version>
+    <Authors>NextCrew</Authors>
+    <Description>Implementation of ApexCharts in Blazor.</Description>
   </PropertyGroup>
 
   
