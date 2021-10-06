@@ -9,8 +9,7 @@ namespace ApexCharts.Blazor.Converters
     {
         public override GridPosition Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return (GridPosition)Enum.Parse(typeof(GridPosition), reader.GetString());
-
+            return (GridPosition)Enum.Parse(typeof(GridPosition), reader.GetString(), true);
         }
 
         public override void Write(Utf8JsonWriter writer, GridPosition value, JsonSerializerOptions options)

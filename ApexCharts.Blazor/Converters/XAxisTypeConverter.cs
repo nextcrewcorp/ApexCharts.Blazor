@@ -9,7 +9,7 @@ namespace ApexCharts.Blazor.Converters
     {
         public override XAxisType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return (XAxisType)Enum.Parse(typeof(XAxisType), reader.GetString());
+            return (XAxisType)Enum.Parse(typeof(XAxisType), reader.GetString(), true);
 
         }
 

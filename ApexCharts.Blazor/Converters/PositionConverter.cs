@@ -9,7 +9,7 @@ namespace ApexCharts.Blazor.Converters
     {
         public override Position Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return (Position)Enum.Parse(typeof(Position), reader.GetString());
+            return (Position)Enum.Parse(typeof(Position), reader.GetString(), true);
 
         }
 

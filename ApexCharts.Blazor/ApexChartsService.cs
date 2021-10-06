@@ -18,7 +18,7 @@ namespace ApexCharts.Blazor
         public ApexChartsService(IJSRuntime jsRuntime)
         {
             moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-               "import", "./_content/ApexCharts.Blazor/apex-charts-blazor.js?4").AsTask());
+               "import", "./_content/ApexCharts.Blazor/apex-charts-blazor.js?10").AsTask());
         }
 
         public async ValueTask<string> Prompt(string message)
@@ -37,6 +37,12 @@ namespace ApexCharts.Blazor
         {
             var module = await moduleTask.Value;
             await module.InvokeVoidAsync("createChart", chartId, options, extendedOptions);
+        }
+
+        public async ValueTask UpdateChart(string chartId, object options, object extendedOptions)
+        {
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("updateChart", chartId, options, extendedOptions);
         }
 
         public async ValueTask DisposeAsync()

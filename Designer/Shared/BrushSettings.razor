@@ -1,0 +1,89 @@
+﻿(Please note that these settings do not work)
+
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Enabled</label>
+    <div class="col-sm-8">
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" @bind="enabled">
+        </div>
+    </div>
+</div>  
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Target</label>
+    <div class="col-sm-8">
+        <input type="text" class="form-control form-control-sm" @bind="target">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Auto-Scale Y-Axis</label>
+    <div class="col-sm-8">
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" @bind="autoScaleYAxis">
+        </div>
+    </div>
+</div>  
+
+
+@code {
+    [Parameter] public Brush Brush { get; set; }
+    [Parameter] public EventCallback<Brush> BrushChanged { get; set; }
+
+    private bool enabled
+    {
+        get
+        {
+            if (Brush != null)
+                return Brush.Enabled;
+            else
+                return false;
+        }
+        set
+        {
+            if (Brush == null)
+                Brush = new Brush();
+                
+            Brush.Enabled = value;
+            BrushChanged.InvokeAsync(Brush);
+        }
+    }
+
+    private string target
+    {
+        get
+        {
+            if (Brush != null)
+                return Brush.Target;
+            else
+                return null;
+        }
+        set
+        {
+            if (Brush == null)
+                Brush = new Brush();
+                
+            Brush.Target = value;
+            BrushChanged.InvokeAsync(Brush);
+        }
+    }
+
+    private bool? autoScaleYAxis
+    {
+        get
+        {
+            if (Brush != null)
+                return Brush.AutoScaleYAxis;
+            else
+                return false;
+        }
+        set
+        {
+            if (Brush == null)
+                Brush = new Brush();
+                
+            Brush.AutoScaleYAxis = value;
+            BrushChanged.InvokeAsync(Brush);
+        }
+    }
+
+
+}

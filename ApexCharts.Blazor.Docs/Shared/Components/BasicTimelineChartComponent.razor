@@ -1,0 +1,40 @@
+﻿<Chart Configuration="@config" Series="@series"></Chart>
+
+@code {
+	ChartConfiguration config = new ChartConfiguration()
+		.SetChart(
+			new ChartOptions()
+			.SetType(ChartType.RangeBar)
+			.SetHeight("350px")
+			.SetZoom(
+				new ZoomOptions()
+				.SetIsEnabled(false)
+			)
+		)
+		.SetPlot(
+			new PlotOptions()
+			.SetBar(
+				new BarPlotOptions()
+				.SetHorizontal(true)
+			)
+		)
+		.SetXAxis(
+			new XAxisOptions()
+			.SetType(XAxisType.DateTime)
+		);
+
+	List<BaseSeries> series = new List<BaseSeries>
+	{
+		new Series
+		{
+			Data = new List<DataItem>
+			{
+				new TimelineDataItem("Code", new DateTime?[] { DateTime.Parse("2019-03-02"), DateTime.Parse("2019-03-04") }),
+				new TimelineDataItem("Test", new DateTime?[] { DateTime.Parse("2019-03-04"), DateTime.Parse("2019-03-08") }),
+				new TimelineDataItem("Validation", new DateTime?[] { DateTime.Parse("2019-03-08"), DateTime.Parse("2019-03-12") }),
+				new TimelineDataItem("Deployment", new DateTime?[] { DateTime.Parse("2019-03-12"), DateTime.Parse("2019-03-18") }),
+			}
+		}
+	};
+
+}

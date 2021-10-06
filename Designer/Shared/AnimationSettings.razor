@@ -1,0 +1,194 @@
+﻿<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Enabled</label>
+    <div class="col-sm-8">
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" @bind="enabled">
+        </div>
+    </div>
+</div>  
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Easing</label>
+    <div class="col-sm-8">
+        <select class="form-control form-control-sm" @bind="easing">
+            @foreach (var type in Enum.GetValues(typeof(Easing)))
+            {
+                <option value="@type">@type.ToString()</option>
+            }
+        </select>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Speed</label>
+    <div class="col-sm-8">
+        <input type="number" class="form-control form-control-sm" @bind="speed">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Animate Gradually Enabled</label>
+    <div class="col-sm-8">
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" @bind="animateGraduallyEnabled">
+        </div>
+    </div>
+</div>  
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Animate Gradually Delay</label>
+    <div class="col-sm-8">
+        <input type="number" class="form-control form-control-sm" @bind="animateGraduallyDelay">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Dynamic Animation Enabled</label>
+    <div class="col-sm-8">
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" @bind="dynamicAnimationEnabled">
+        </div>
+    </div>
+</div>  
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Dynamic Animation Speed</label>
+    <div class="col-sm-8">
+        <input type="number" class="form-control form-control-sm" @bind="dynamicAnimationSpeed">
+    </div>
+</div>
+
+
+@code {
+    [Parameter] public Animations Animations { get; set; }
+    [Parameter] public EventCallback<Animations> AnimationsChanged { get; set; }
+
+    private bool enabled
+    {
+        get
+        {
+            if (Animations != null)
+                return Animations.Enabled;
+            else
+                return true;
+        }
+        set
+        {
+            if (Animations == null)
+                Animations = new Animations();
+                
+            Animations.Enabled = value;
+            AnimationsChanged.InvokeAsync(Animations);
+        }
+    }
+
+    private Easing? easing
+    {
+        get
+        {
+            if (Animations != null)
+                return Animations.Easing;
+            else
+                return Easing.EaseInOut;
+        }
+        set
+        {
+
+            if (Animations == null)
+                Animations = new Animations();
+                
+            Animations.Easing = value;
+            AnimationsChanged.InvokeAsync(Animations);
+        }
+    }
+
+    private double? speed
+    {
+        get
+        {
+            if (Animations != null)
+                return Animations.Speed;
+            else
+                return 800;
+        }
+        set
+        {
+            if (Animations == null)
+                Animations = new Animations();
+
+            Animations.Speed = value;
+            AnimationsChanged.InvokeAsync(Animations);
+        }
+    }
+
+    private bool? animateGraduallyEnabled
+    {
+        get
+        {
+            if (Animations != null)
+                return Animations.AnimateGraduallyEnabled;
+            else
+                return true;
+        }
+        set
+        {
+            if (Animations == null)
+                Animations = new Animations();
+                
+            Animations.AnimateGraduallyEnabled = value;
+            AnimationsChanged.InvokeAsync(Animations);
+        }
+    }
+
+    private double? animateGraduallyDelay
+    {
+        get
+        {
+            if (Animations != null)
+                return Animations.AnimateGraduallyDelay;
+            else
+                return 150;
+        }
+        set
+        {
+            if (Animations == null)
+                Animations = new Animations();
+
+            Animations.AnimateGraduallyDelay = value;
+            AnimationsChanged.InvokeAsync(Animations);
+        }
+    }
+
+    private bool? dynamicAnimationEnabled
+    {
+        get
+        {
+            if (Animations != null)
+                return Animations.DynamicAnimationEnabled;
+            else
+                return true;
+        }
+        set
+        {
+            if (Animations == null)
+                Animations = new Animations();
+                
+            Animations.DynamicAnimationEnabled = value;
+            AnimationsChanged.InvokeAsync(Animations);
+        }
+    }
+
+    private double? dynamicAnimationSpeed
+    {
+        get
+        {
+            if (Animations != null)
+                return Animations.DynamicAnimationSpeed;
+            else
+                return 350;
+        }
+        set
+        {
+            if (Animations == null)
+                Animations = new Animations();
+
+            Animations.DynamicAnimationSpeed = value;
+            AnimationsChanged.InvokeAsync(Animations);
+        }
+    }
+
+}

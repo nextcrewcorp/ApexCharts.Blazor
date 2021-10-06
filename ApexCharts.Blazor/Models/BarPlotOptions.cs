@@ -4,10 +4,8 @@ namespace ApexCharts.Blazor.Models
 {
     public class BarPlotOptions
     {
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public bool Horizontal { get; set; }
+        public bool Horizontal { get; set; } = false;
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public double BorderRadius { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

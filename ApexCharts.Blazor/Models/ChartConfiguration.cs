@@ -10,7 +10,7 @@ namespace ApexCharts.Blazor.Models
         public List<BaseSeries> Series { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public ChartOptions Chart { get; set; }
+        public ChartOptions Chart { get; set; } = new ChartOptions();
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DataLabelsOptions DataLabels { get; set; }
@@ -53,6 +53,9 @@ namespace ApexCharts.Blazor.Models
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<string> Colors { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public MarkerOptions Markers { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<ResponsiveOptions> Responsive { get; set; }
@@ -161,6 +164,12 @@ namespace ApexCharts.Blazor.Models
                 Colors = new List<string>();
 
             Colors.Add(color);
+            return this;
+        }
+
+        public ChartConfiguration SetMarkers(MarkerOptions markers)
+        {
+            Markers = markers;
             return this;
         }
 

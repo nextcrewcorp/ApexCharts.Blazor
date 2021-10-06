@@ -1,0 +1,97 @@
+﻿<Chart Configuration="@config" Series="@series"></Chart>
+
+@code {
+	ChartConfiguration config = new ChartConfiguration()
+			.SetChart(
+				new ChartOptions()
+				.SetType(ChartType.Bar)
+				.SetHeight("350px")
+			)
+			.AddColor("#00E396")
+			.SetDataLabels(
+				new DataLabelsOptions()
+				.SetFormatExpression(@"const goals = opt.w.config.series[opt.seriesIndex].data[opt.dataPointIndex].goals
+if (goals && goals.length) {
+	return `${val} / ${goals[0].value}`
+}
+
+return val")
+			)
+			.SetPlot(
+				new PlotOptions()
+				.SetBar(
+					new BarPlotOptions()
+					.SetHorizontal(true)
+				)
+			)
+			.SetLegend(
+				new LegendOptions()
+				.SetShow(true)
+				.SetShowForSingleSeries(true)
+				.SetCustomLegendItems(new string[] { "Actual", "Expected" })
+				.SetMarkers(
+					new LegendMarkerOptions()
+					.SetFillColors(new string[] { "#00E396", "#775DD0" })
+				)
+			);
+
+	List<BaseSeries> series = new List<BaseSeries>
+	{
+		new Series
+		{
+			Name = "Actual",
+			Data = new List<DataItem>
+			{
+				new CategoryDataItem("2011", 12)
+				.AddGoal(
+					new Goal()
+					.SetName("Expected")
+					.SetValue(14)
+					.SetStrokeWidth(5)
+					.SetStrokeColor("#775DD0")
+				),
+				new CategoryDataItem("2012", 44)
+				.AddGoal(
+					new Goal()
+					.SetName("Expected")
+					.SetValue(54)
+					.SetStrokeWidth(5)
+					.SetStrokeColor("#775DD0")
+				),
+				new CategoryDataItem("2013", 54)
+				.AddGoal(
+					new Goal()
+					.SetName("Expected")
+					.SetValue(52)
+					.SetStrokeWidth(5)
+					.SetStrokeColor("#775DD0")
+				),
+				new CategoryDataItem("2014", 66)
+				.AddGoal(
+					new Goal()
+					.SetName("Expected")
+					.SetValue(65)
+					.SetStrokeWidth(5)
+					.SetStrokeColor("#775DD0")
+				),
+				new CategoryDataItem("2015", 81)
+				.AddGoal(
+					new Goal()
+					.SetName("Expected")
+					.SetValue(66)
+					.SetStrokeWidth(5)
+					.SetStrokeColor("#775DD0")
+				),
+				new CategoryDataItem("2016", 67)
+				.AddGoal(
+					new Goal()
+					.SetName("Expected")
+					.SetValue(70)
+					.SetStrokeWidth(5)
+					.SetStrokeColor("#775DD0")
+				),
+			}
+		}
+	};
+
+}

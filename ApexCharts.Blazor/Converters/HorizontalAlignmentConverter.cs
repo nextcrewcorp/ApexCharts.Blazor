@@ -9,7 +9,7 @@ namespace ApexCharts.Blazor.Converters
     {
         public override HorizontalAlignment Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return (HorizontalAlignment)Enum.Parse(typeof(HorizontalAlignment), reader.GetString());
+            return (HorizontalAlignment)Enum.Parse(typeof(HorizontalAlignment), reader.GetString(), true);
         }
 
         public override void Write(Utf8JsonWriter writer, HorizontalAlignment value, JsonSerializerOptions options)

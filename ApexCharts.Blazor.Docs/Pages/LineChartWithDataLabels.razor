@@ -1,0 +1,23 @@
+﻿@page "/line-charts/line-chart-with-data-labels"
+
+@inject IJSRuntime JSRuntime
+
+<h1>Line Chart with Data Labels</h1>
+
+<LineChartWithDataLabelsComponent></LineChartWithDataLabelsComponent>
+
+<pre><code class="language-html">&lt;Chart Configuration="@@config" Series="@@series"&gt;&lt;/Chart&gt;</code></pre>
+<pre><code class="language-csharp"></code></pre>
+
+@code {
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await base.OnAfterRenderAsync(firstRender);
+
+		if (firstRender)
+		{
+			((JSInProcessRuntime)JSRuntime).InvokeVoid("Prism.highlightAll");
+		}
+	}
+
+}

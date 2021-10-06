@@ -1,0 +1,224 @@
+﻿<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Enabled</label>
+    <div class="col-sm-8">
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" @bind="enabled">
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Type</label>
+    <div class="col-sm-8">
+        <select class="form-control form-control-sm" @bind="type">
+            @foreach (var type in Enum.GetValues(typeof(ZoomType)))
+            {
+                <option value="@type">@type.ToString()</option>
+            }
+        </select>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Auto-Scale Y-Axis</label>
+    <div class="col-sm-8">
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" @bind="autoScaleYAxis">
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Fill Color</label>
+    <div class="col-sm-8">
+        <input type="color" class="form-control form-control-sm" style="width:50px" @bind="areaFillColor">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Fill Opacity</label>
+    <div class="col-sm-8">
+        <input type="number" min="0.0" max="1.0" step=".1" class="form-control form-control-sm" @bind="areaFillOpacity">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Stroke Color</label>
+    <div class="col-sm-8">
+        <input type="color" class="form-control form-control-sm" style="width:50px" @bind="areaStrokeColor">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Stroke Opacity</label>
+    <div class="col-sm-8">
+        <input type="number" min="0.0" max="1.0" step=".1" class="form-control form-control-sm" @bind="areaStrokeOpacity">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Stroke Width</label>
+    <div class="col-sm-8">
+        <input type="number" min="0" step="1" class="form-control form-control-sm" @bind="areaStrokeWidth">
+    </div>
+</div>
+
+
+@code {
+    [Parameter] public ZoomOptions ZoomOptions { get; set; }
+    [Parameter] public EventCallback<ZoomOptions> ZoomOptionsChanged { get; set; }
+
+    private bool enabled
+    {
+        get
+        {
+            if (ZoomOptions != null)
+                return ZoomOptions.Enabled;
+            else
+                return true;
+        }
+        set
+        {
+            if (ZoomOptions == null)
+                ZoomOptions = new ZoomOptions();
+                
+            ZoomOptions.Enabled = value;
+            ZoomOptionsChanged.InvokeAsync(ZoomOptions);
+        }
+    }
+    private bool? autoScaleYAxis
+    {
+        get
+        {
+            if (ZoomOptions != null)
+                return ZoomOptions.AutoScaleYAxis;
+            else
+                return false;
+        }
+        set
+        {
+            if (ZoomOptions == null)
+                ZoomOptions = new ZoomOptions();
+                
+            ZoomOptions.AutoScaleYAxis = value;    
+            ZoomOptionsChanged.InvokeAsync(ZoomOptions);
+        }
+    }
+    private ZoomType? type
+    {
+        get
+        {
+            if (ZoomOptions != null)
+                return ZoomOptions.Type;
+            else
+                return null;
+        }
+        set
+        {
+
+            if (ZoomOptions == null)
+                ZoomOptions = new ZoomOptions();
+                
+            ZoomOptions.Type = value;  
+            ZoomOptionsChanged.InvokeAsync(ZoomOptions);
+        }
+    }
+    private string areaFillColor
+    {
+        get
+        {
+            if (ZoomOptions != null && ZoomOptions.ZoomedArea != null)
+                return ZoomOptions.ZoomedArea.FillColor;
+            else
+                return null;
+        }
+        set
+        {
+            if (ZoomOptions == null)
+                ZoomOptions = new ZoomOptions();
+
+            if (ZoomOptions.ZoomedArea == null)
+                ZoomOptions.ZoomedArea = new ZoomedArea();
+                
+            ZoomOptions.ZoomedArea.FillColor = value;
+            ZoomOptionsChanged.InvokeAsync(ZoomOptions);
+        }
+    }
+    private double? areaFillOpacity
+    {
+        get
+        {
+            if (ZoomOptions != null && ZoomOptions.ZoomedArea != null)
+                return ZoomOptions.ZoomedArea.FillOpacity;
+            else
+                return null;
+        }
+        set
+        {
+            if (ZoomOptions == null)
+                ZoomOptions = new ZoomOptions();
+
+            if (ZoomOptions.ZoomedArea == null)
+                ZoomOptions.ZoomedArea = new ZoomedArea();
+                
+            ZoomOptions.ZoomedArea.FillOpacity = value;
+            ZoomOptionsChanged.InvokeAsync(ZoomOptions);
+        }
+    }
+    private string areaStrokeColor
+    {
+        get
+        {
+            if (ZoomOptions != null && ZoomOptions.ZoomedArea != null)
+                return ZoomOptions.ZoomedArea.StrokeColor;
+            else
+                return null;
+        }
+        set
+        {
+            if (ZoomOptions == null)
+                ZoomOptions = new ZoomOptions();
+
+            if (ZoomOptions.ZoomedArea == null)
+                ZoomOptions.ZoomedArea = new ZoomedArea();
+                
+            ZoomOptions.ZoomedArea.StrokeColor = value;
+            ZoomOptionsChanged.InvokeAsync(ZoomOptions);
+        }
+    }
+    private double? areaStrokeOpacity
+    {
+        get
+        {
+            if (ZoomOptions != null && ZoomOptions.ZoomedArea != null)
+                return ZoomOptions.ZoomedArea.StrokeOpacity;
+            else
+                return null;
+        }
+        set
+        {
+            if (ZoomOptions == null)
+                ZoomOptions = new ZoomOptions();
+
+            if (ZoomOptions.ZoomedArea == null)
+                ZoomOptions.ZoomedArea = new ZoomedArea();
+                
+            ZoomOptions.ZoomedArea.StrokeOpacity = value;
+            ZoomOptionsChanged.InvokeAsync(ZoomOptions);
+        }
+    }
+    private double? areaStrokeWidth
+    {
+        get
+        {
+            if (ZoomOptions != null && ZoomOptions.ZoomedArea != null)
+                return ZoomOptions.ZoomedArea.StrokeWidth;
+            else
+                return null;
+        }
+        set
+        {
+            if (ZoomOptions == null)
+                ZoomOptions = new ZoomOptions();
+
+            if (ZoomOptions.ZoomedArea == null)
+                ZoomOptions.ZoomedArea = new ZoomedArea();
+                
+            ZoomOptions.ZoomedArea.StrokeWidth = value;
+            ZoomOptionsChanged.InvokeAsync(ZoomOptions);
+        }
+    }
+}

@@ -7,22 +7,25 @@ namespace ApexCharts.Blazor.Models
     public class LegendOptions
     {
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public bool Show { get; set; }
+        public bool Show { get; set; } = true;
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public bool ShowForSingleSeries { get; set; }
+        public bool ShowForSingleSeries { get; set; } = false;
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public HorizontalAlignment HorizontalAlign { get; set; }
+        public HorizontalAlignment HorizontalAlign { get; set; } = HorizontalAlignment.Center;
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public Position Position { get; set; }
+        public Position Position { get; set; } = Position.Bottom;
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<string> CustomLegendItems { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public LegendMarkerOptions Markers { get; set; }
+
+        public bool Floating { get; set; } = false;
+
+        public decimal OffsetX { get; set; }
+
+        public decimal OffsetY { get; set; }
 
         #region Method Chaining
 
@@ -65,9 +68,27 @@ namespace ApexCharts.Blazor.Models
             return this;
         }
 
+        public LegendOptions SetFloating(bool floating)
+        {
+            Floating = floating;
+            return this;
+        }
+
         public LegendOptions SetMarkers(LegendMarkerOptions markers)
         {
             Markers = markers;
+            return this;
+        }
+
+        public LegendOptions SetOffsetX(decimal offsetX)
+        {
+            OffsetX = offsetX;
+            return this;
+        }
+
+        public LegendOptions SetOffsetY(decimal offsetY)
+        {
+            OffsetY = offsetY;
             return this;
         }
 

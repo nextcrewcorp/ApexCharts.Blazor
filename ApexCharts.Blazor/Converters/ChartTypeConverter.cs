@@ -9,8 +9,7 @@ namespace ApexCharts.Blazor.Converters
     {
         public override ChartType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return (ChartType)Enum.Parse(typeof(ChartType), reader.GetString());
-
+            return (ChartType)Enum.Parse(typeof(ChartType), reader.GetString(), true);
         }
 
         public override void Write(Utf8JsonWriter writer, ChartType value, JsonSerializerOptions options)

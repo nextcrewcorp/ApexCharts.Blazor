@@ -9,7 +9,7 @@ namespace ApexCharts.Blazor.Converters
     {
         public override LineCap Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return (LineCap)Enum.Parse(typeof(LineCap), reader.GetString());
+            return (LineCap)Enum.Parse(typeof(LineCap), reader.GetString(), true);
         }
 
         public override void Write(Utf8JsonWriter writer, LineCap value, JsonSerializerOptions options)

@@ -12,6 +12,9 @@ namespace ApexCharts.Blazor.Models
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public List<string> Categories { get; set; } = new List<string>();
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public TitleOptions Title { get; set; }
+
         #region Method Chaining
 
         public XAxisOptions SetType(XAxisType type)
@@ -29,6 +32,12 @@ namespace ApexCharts.Blazor.Models
         public XAxisOptions AddCategory(string category)
         {
             Categories.Add(category);
+            return this;
+        }
+
+        public XAxisOptions SetTitle(TitleOptions title)
+        {
+            Title = title;
             return this;
         }
 

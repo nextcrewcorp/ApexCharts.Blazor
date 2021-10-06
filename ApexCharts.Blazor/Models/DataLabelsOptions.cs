@@ -6,37 +6,34 @@ namespace ApexCharts.Blazor.Models
 {
     public class DataLabelsOptions
     {
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        [JsonPropertyName("enabled")]
-        public bool IsEnabled { get; set; } = true;
+        public bool Enabled { get; set; } = true;
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("enabledOnSeries")]
-        public List<int> IsEnabledOnSeries { get; set; }
+        public List<int> EnabledOnSeries { get; set; }
 
         [JsonIgnore]
         public string FormatExpression { get; set; }
 
         #region Method Chaining
 
-        public DataLabelsOptions SetIsEnabled(bool isEnabled)
+        public DataLabelsOptions SetEnabled(bool enabled)
         {
-            IsEnabled = isEnabled;
+            Enabled = enabled;
             return this;
         }
 
-        public DataLabelsOptions SetIsEnabledOnSeries(IEnumerable<int> indexes)
+        public DataLabelsOptions SetEnabledOnSeries(IEnumerable<int> indexes)
         {
-            IsEnabledOnSeries = indexes.ToList();
+            EnabledOnSeries = indexes.ToList();
             return this;
         }
 
-        public DataLabelsOptions AddIsEnabledOnSeries(int index)
+        public DataLabelsOptions AddEnabledOnSeries(int index)
         {
-            if (IsEnabledOnSeries == null)
-                IsEnabledOnSeries = new List<int>();
+            if (EnabledOnSeries == null)
+                EnabledOnSeries = new List<int>();
 
-            IsEnabledOnSeries.Add(index);
+            EnabledOnSeries.Add(index);
             return this;
         }
 

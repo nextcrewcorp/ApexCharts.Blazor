@@ -15,9 +15,11 @@ namespace ApexCharts.Blazor
         [Parameter]
         public List<BaseSeries> Series { get; set; } = new List<BaseSeries>();
         [Parameter]
-        public ChartConfiguration Configuration { get; set; }
+        public ChartConfiguration Configuration { get; set; } = new ChartConfiguration();
 
         private string chartId = $"chart.{Guid.NewGuid()}";
+        private bool hasBeenRendered = false;
+        private string state;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -25,8 +27,44 @@ namespace ApexCharts.Blazor
 
             if (firstRender)
             {
-                await ChartService.CreateChart(chartId, GenerateOptions(), GenerateExtendedOptions());
+                var options = GenerateOptions();
+                var optionsJson = JsonSerializer.Serialize(options);
+                await ChartService.CreateChart(chartId, options, GenerateExtendedOptions());
+                hasBeenRendered = true;
+                state = optionsJson;
             }
+        }
+
+        public override async Task SetParametersAsync(ParameterView parameters)
+        {
+            foreach (var parameter in parameters)
+            {
+                switch (parameter.Name)
+                {
+                    case nameof(Series):
+                        Series = (List<BaseSeries>)parameter.Value;
+                        break;
+                    case nameof(Configuration):
+                        Configuration = (ChartConfiguration)parameter.Value;
+                        break;
+                    default: throw new Exception("There are no matching parameters found.");
+                }
+            }
+
+            // Chart has changed so we need to update it.
+            if (hasBeenRendered)
+            {
+                var options = GenerateOptions();
+                var optionsJson = JsonSerializer.Serialize(options);
+
+                if (state != optionsJson)
+                {
+                    await ChartService.UpdateChart(chartId, options, GenerateExtendedOptions());
+                    state = optionsJson;
+                }
+            }
+
+            await base.SetParametersAsync(ParameterView.Empty);
         }
 
         private object GenerateOptions()

@@ -1,0 +1,62 @@
+﻿<Chart Configuration="@config" Series="@series"></Chart>
+
+@code {
+	ChartConfiguration config = new ChartConfiguration()
+		.SetChart(
+			new ChartOptions()
+			.SetType(ChartType.Line)
+			.SetHeight("350px")
+			//.SetWidth("650px")
+		)
+		.SetStroke(
+			new StrokeOptions()
+			.SetWidths(new int[] { 0, 4 })
+		)
+		.SetDataLabels(
+			new DataLabelsOptions()
+			.SetEnabled(true)
+			.SetEnabledOnSeries(new int[] { 1 })
+		)
+		.SetTitle(
+			new TitleOptions()
+			.SetText("Traffic Sources")
+		)
+		.SetXAxis(
+			new XAxisOptions()
+			.SetType(XAxisType.DateTime)
+		)
+		.AddYAxis(
+			new YAxisOptions()
+			.SetTitle(
+				new YAxisTitle()
+				.SetText("Website Blog")
+			)
+		)
+		.AddYAxis(
+			new YAxisOptions()
+			.SetOpposite(true)
+			.SetTitle(
+				new YAxisTitle()
+				.SetText("Social Media")
+			)
+		)
+		.SetLabels(new string[] { "01 Jan 2001", "02 Jan 2001", "03 Jan 2001", "04 Jan 2001", "05 Jan 2001", 
+			"06 Jan 2001", "07 Jan 2001", "08 Jan 2001", "09 Jan 2001", "10 Jan 2001", "11 Jan 2001", "12 Jan 2001" });
+
+	List<BaseSeries> series = new List<BaseSeries>
+	{
+		new Series
+		{
+			Name = "Website Blog",
+			Type = ChartType.Column,
+			Data = NumericDataItem.FromArray(new decimal?[] { 440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160 })
+		},
+		new Series
+		{
+			Name = "Social Media",
+			Type = ChartType.Line,
+			Data = NumericDataItem.FromArray(new decimal?[] { 23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16 })
+		}
+	};
+
+}

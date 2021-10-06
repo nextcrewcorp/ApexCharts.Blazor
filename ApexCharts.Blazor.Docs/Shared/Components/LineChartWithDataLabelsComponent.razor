@@ -1,0 +1,91 @@
+﻿<Chart Configuration="@config" Series="@series"></Chart>
+
+@code {
+	ChartConfiguration config = new ChartConfiguration()
+		.SetChart(
+			new ChartOptions()
+			.SetType(ChartType.Line)
+			.SetHeight("350px")
+			.SetDropShadow(
+				new DropShadow()
+				.SetEnabled(true)
+				.AddColor("#000")
+				.SetTop(18m)
+				.SetLeft(7m)
+				.SetBlur(10m)
+				.SetOpacity(.2m)
+			)
+			.SetToolbar(
+				new ToolbarOptions()
+				.SetShow(false)
+			)
+		)
+		.SetColors(new string[] { "#77B6EA", "#545454" })
+		.SetDataLabels(
+			new DataLabelsOptions()
+			.SetEnabled(true)
+		)
+		.SetStroke(
+			new StrokeOptions()
+			.SetCurve(StrokeCurve.Smooth)
+		)
+		.SetTitle(
+			new TitleOptions()
+			.SetText("Average High & Low Temperature")
+			.SetAlign(HorizontalAlignment.Left)
+		)
+		.SetGrid(
+			new GridOptions()
+			.SetBorderColor("#e7e7e7")
+			.SetRow(
+				new GridRowOptions()
+				.SetColors(new string[] { "#f3f3f3", "transparent" })
+				.SetOpacity(.5m)
+			)
+		)
+		.SetMarkers(
+			new MarkerOptions()
+			.AddSize(1)
+		)
+		.SetXAxis(
+			new XAxisOptions()
+			.SetCategories(new string[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" })
+			.SetTitle(
+				new TitleOptions()
+				.SetText("Month")
+			)
+		)
+		.AddYAxis(
+			new YAxisOptions()
+			.SetTitle(
+				new YAxisTitle()
+				.SetText("Temperature")
+			)
+			.SetMin(5m)
+			.SetMax(40m)
+		)
+		.SetLegend(
+			new LegendOptions()
+			.SetPosition(Position.Top)
+			.SetHorizontalAlign(HorizontalAlignment.Right)
+			.SetFloating(true)
+			.SetOffsetX(-5m)
+			.SetOffsetY(-25m)
+		);
+	
+
+	List<BaseSeries> series = new List<BaseSeries>
+	{
+		new Series
+		{
+			Name = "High - 2013",
+			Data = NumericDataItem.FromArray(new double?[] { 28, 29, 33, 36, 32, 32, 33 })
+		},
+		new Series
+		{
+			Name = "Low - 2013",
+			Data = NumericDataItem.FromArray(new double?[] { 12, 11, 14, 18, 17, 13, 13 })
+		},
+	};
+
+}

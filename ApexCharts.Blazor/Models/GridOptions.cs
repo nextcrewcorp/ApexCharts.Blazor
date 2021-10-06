@@ -32,5 +32,27 @@ namespace ApexCharts.Blazor.Models
         
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Padding Padding { get; set; }
+
+        #region Method Chaining
+
+        public GridOptions SetShow(bool show)
+        {
+            Show = show;
+            return this;
+        }
+
+        public GridOptions SetBorderColor(string value)
+        {
+            BorderColor = value;
+            return this;
+        }
+
+        public GridOptions SetRow(GridRowOptions value)
+        {
+            Row = value;
+            return this;
+        }
+
+        #endregion
     }
 }

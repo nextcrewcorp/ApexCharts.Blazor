@@ -13,6 +13,18 @@ namespace ApexCharts.Blazor.Models
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public YAxisTooltip Tooltip { get; set; }
 
+        /// <summary>
+        /// Lowest number to be set for the y-axis.
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public decimal? Min { get; set; }
+
+        /// <summary>
+        /// Highest number to be set for the y-axis.
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public decimal? Max { get; set; }
+
         public static YAxisOptions[] CreateSingle(YAxisOptions yaxis)
         {
             return new YAxisOptions[]
@@ -47,6 +59,18 @@ namespace ApexCharts.Blazor.Models
         public YAxisOptions SetTooltip(YAxisTooltip tooltip)
         {
             Tooltip = tooltip;
+            return this;
+        }
+
+        public YAxisOptions SetMin(decimal? min)
+        {
+            Min = min;
+            return this;
+        }
+
+        public YAxisOptions SetMax(decimal? max)
+        {
+            Max = max;
             return this;
         }
 

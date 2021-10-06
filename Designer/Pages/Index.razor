@@ -1,0 +1,310 @@
+﻿@page "/"
+@using System.Text.Json
+
+@inject IJSRuntime JSRuntime
+
+
+<div class="page">
+    <div class="sidebar">
+        <div class="top-row pl-4 navbar navbar-dark">
+            <a class="navbar-brand" href="">Designer</a>
+            <button class="navbar-toggler">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>      
+        
+        <div class="p-2" style="color:#fff">
+            <button type="button" class="mt-2 mb-2 sidebar-label btn btn-outline-light">Chart Options</button>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Chart Type</label>
+                <div class="col-sm-8">
+                    <select class="form-control form-control-sm" @bind="config.Chart.Type">
+                        @foreach (var type in Enum.GetValues(typeof(ChartType)))
+                        {
+                            <option value="@type">@type.ToString()</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Background</label>
+                <div class="col-sm-8">
+                    <input type="color" class="form-control form-control-sm" style="width:50px" @bind="chartBackground">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Default Locale</label>
+                <div class="col-sm-8">
+                    <input disabled type="text" class="form-control form-control-sm" @bind="chartDefaultLocale">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Font Family</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" @bind="chartFontFamily">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Foreground Color</label>
+                <div class="col-sm-8">
+                    <input type="color" class="form-control form-control-sm" style="width:50px" @bind="chartForeColor">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Group</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" @bind="chartGroup">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Height</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" @bind="chartHeight">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Offset-X</label>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control form-control-sm" @bind="chartOffsetX">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Offset-Y</label>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control form-control-sm" @bind="chartOffsetY">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Parent Height Offset</label>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control form-control-sm" @bind="chartParentHeightOffset">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Redraw On Parent Resize</label>
+                <div class="col-sm-8">
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" @bind="chartRedrawOnParentResize">
+                    </div>
+                </div>
+            </div>
+               
+            <button type="button" class="mt-2 mb-2 sidebar-label btn btn-outline-light" @onclick='(() => ToggleCollapsible("animations"))'>Animations</button>
+
+            <div class="collapse" id="animations">
+                <AnimationSettings @bind-Animations="config.Chart.Animations"></AnimationSettings>
+            </div>
+
+            <button disabled type="button" class="mt-2 mb-2 sidebar-label btn btn-outline-light" @onclick='(() => ToggleCollapsible("brush"))'>Brush</button>
+
+            <div class="collapse" id="brush">
+                <BrushSettings @bind-Brush="config.Chart.Brush"></BrushSettings>
+            </div>
+
+            <button type="button" class="mt-2 mb-2 sidebar-label btn btn-outline-light" @onclick='(() => ToggleCollapsible("drop-shadow"))'>Drop Shadow</button>
+
+            <div class="collapse" id="drop-shadow">
+                <DropShadowSettings @bind-DropShadow="config.Chart.DropShadow"></DropShadowSettings>
+            </div>
+
+
+            <button type="button" class="mt-2 mb-2 sidebar-label btn btn-outline-light" @onclick='(() => ToggleCollapsible("zoom"))'>Zoom</button>
+
+            <div class="collapse" id="zoom">
+                <ZoomSettings @bind-ZoomOptions="config.Chart.Zoom"></ZoomSettings>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="main">
+        <div class="content px-4">
+            <Chart Configuration="@config" Series="@(GetSeries())"></Chart>
+
+            @(System.Text.Json.JsonSerializer.Serialize(config, new System.Text.Json.JsonSerializerOptions { PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase}))
+        </div>
+    </div>
+</div>
+
+@code {
+    
+    private string chartBackground
+    {
+        get
+        {
+            if (config.Chart.Background == null)
+                return "#ffffff";
+
+            return config.Chart.Background;
+        }
+        set
+        {
+            config.Chart.Background = value;
+        }
+    }
+    private string chartDefaultLocale
+    {
+        get
+        {
+            if (config.Chart.Background == null)
+                return "en";
+
+            return config.Chart.DefaultLocale;
+        }
+        set
+        {
+            config.Chart.DefaultLocale = value;
+        }
+    }
+    private string chartFontFamily
+    {
+        get
+        {
+            if (config.Chart.FontFamily == null)
+                return "Helvetica, Arial, sans-serif";
+
+            return config.Chart.FontFamily;
+        }
+        set
+        {
+            config.Chart.FontFamily = value;
+        }
+    }
+    private string chartForeColor
+    {
+        get
+        {
+            if (config.Chart.ForeColor == null)
+                return "#373d3f";
+
+            return config.Chart.ForeColor;
+        }
+        set
+        {
+            config.Chart.ForeColor = value;
+        }
+    }
+    private string chartGroup
+    {
+        get
+        {
+            if (config.Chart.Group == null)
+                return null;
+
+            return config.Chart.Group;
+        }
+        set
+        {
+            config.Chart.Group = value;
+        }
+    }
+    private string chartHeight
+    {
+        get
+        {
+            if (config.Chart.Height == null)
+                return null;
+
+            return config.Chart.Height;
+        }
+        set
+        {
+            config.Chart.Height = value;
+        }
+    }
+    private decimal? chartOffsetX
+    {
+        get
+        {
+            if (config.Chart.OffsetX == null)
+                return null;
+
+            return config.Chart.OffsetX;
+        }
+        set
+        {
+            config.Chart.OffsetX = value;
+        }
+    }
+    private decimal? chartOffsetY
+    {
+        get
+        {
+            if (config.Chart.OffsetY == null)
+                return null;
+
+            return config.Chart.OffsetY;
+        }
+        set
+        {
+            config.Chart.OffsetY = value;
+        }
+    }
+    private decimal? chartParentHeightOffset
+    {
+        get
+        {
+            if (config.Chart.ParentHeightOffset == null)
+                return null;
+
+            return config.Chart.ParentHeightOffset;
+        }
+        set
+        {
+            config.Chart.ParentHeightOffset = value;
+        }
+    }
+    private bool? chartRedrawOnParentResize
+    {
+        get
+        {
+            if (config.Chart.RedrawOnParentResize == null)
+                return null;
+
+            return config.Chart.RedrawOnParentResize;
+        }
+        set
+        {
+            config.Chart.RedrawOnParentResize = value;
+        }
+    }
+
+
+    private ChartConfiguration config = new ChartConfiguration()
+    .SetChart(
+        new ChartOptions()
+        .SetType(ChartType.Line)
+        .SetHeight("350px")
+    );
+
+    private List<BaseSeries> GetSeries()
+    {
+        if (config.Chart.Type == ChartType.Area || config.Chart.Type == ChartType.Bar || config.Chart.Type == ChartType.Line)
+        {
+            return new List<BaseSeries>
+            {
+                new Series
+                {
+                    Data = NumericDataItem.FromArray(new double?[] { 10, 41, 35, 51, 49, 62, 69, 91, 148 })
+                }
+            };
+        }
+        else if (config.Chart.Type == ChartType.Pie || config.Chart.Type == ChartType.Donut)
+        {
+            return new List<BaseSeries>
+            {
+                new SimpleSeries(new decimal?[] { 10, 41, 35, 51 })
+            };           
+        }
+
+        return new List<BaseSeries>();
+    }
+
+    private async Task ToggleCollapsible(string id)
+    {
+        await JSRuntime.InvokeVoidAsync("app.toggleCollapsible", id);
+    }
+}
