@@ -1,38 +1,36 @@
 ﻿<Chart Configuration="@config" Series="@series"></Chart>
 
 @code {
-	ChartConfiguration config = new ChartConfiguration
-	{
-		Chart = new ChartOptions
-		{
-			Height = "350px",
-			Zoom = new ZoomOptions
-			{
-				IsEnabled = false
-			}
-		},
-		DataLabels = new DataLabelsOptions
-		{
-			Enabled = false
-		},
-		Stroke = new StrokeOptions
-		{
-			Curve = StrokeCurve.Smooth
-		},
-		Title = new TitleOptions
-		{
-			Text = "Product Trends by Month",
-			Align = HorizontalAlignment.Left
-		},
-		Grid = new GridOptions
-		{
-			Row = new GridRowOptions
-			{
-				Colors = new List<string> { "#f3f3f3", "transparent" },
-				Opacity = 0.5M
-			}
-		}
-	};
+	ChartConfiguration config = new ChartConfiguration()
+		.SetChart(
+			new ChartOptions()
+			.SetHeight("350px")
+			.SetZoom(
+				new ZoomOptions()
+				.SetEnabled(false)
+			)
+		)
+		.SetDataLabels(
+			new DataLabelsOptions()
+			.SetEnabled(false)
+		)
+		.SetStroke(
+			new StrokeOptions()
+			.SetCurve(StrokeCurve.Smooth)
+		)
+		.SetTitle(
+			new TitleOptions()
+			.SetText("Product Trends by Month")
+			.SetAlign(HorizontalAlignment.Left)
+		)
+		.SetGrid(
+			new GridOptions()
+			.SetRow(
+				new GridRowOptions()
+				.SetColors(new string[] { "#f3f3f3", "transparent" })
+				.SetOpacity(0.5)
+			)
+		);
 
 	List<BaseSeries> series = new List<BaseSeries>
 	{

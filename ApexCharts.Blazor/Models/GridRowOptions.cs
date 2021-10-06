@@ -10,7 +10,7 @@ namespace ApexCharts.Blazor.Models
         public List<string> Colors { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public decimal? Opacity { get; set; }
+        public double? Opacity { get; set; }
 
         #region Method Chaining
 
@@ -29,7 +29,7 @@ namespace ApexCharts.Blazor.Models
             return this;
         }
 
-        public GridRowOptions SetOpacity(decimal? value)
+        public GridRowOptions SetOpacity(double? value)
         {
             Opacity = value;
             return this;

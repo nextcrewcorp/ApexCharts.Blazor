@@ -18,7 +18,7 @@ namespace ApexCharts.Blazor.Models
 
         #region Method Chaining
 
-        public ZoomOptions SetIsEnabled(bool enabled)
+        public ZoomOptions SetEnabled(bool enabled)
         {
             Enabled = enabled;
             return this;
