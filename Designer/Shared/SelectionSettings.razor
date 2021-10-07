@@ -1,0 +1,64 @@
+﻿@using ApexCharts.Blazor.Models.Enums
+
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Enabled</label>
+    <div class="col-sm-8">
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" @bind="enabled">
+        </div>
+    </div>
+</div>  
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Type</label>
+    <div class="col-sm-8">
+        <select class="form-control form-control-sm" @bind="type">
+            @foreach (var t in Enum.GetValues(typeof(Axis)))
+            {
+                <option value="@t">@t.ToString()</option>
+            }
+        </select>
+    </div>
+</div>
+
+
+@code {
+    [Parameter] public Selection Selection { get; set; }
+    [Parameter] public EventCallback<Selection> SelectionChanged { get; set; }
+
+    private bool enabled
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.Enabled;
+            else
+                return true;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+                
+            Selection.Enabled = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+    private Axis type
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.Type;
+            else
+                return Axis.X;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+                
+            Selection.Type = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+}

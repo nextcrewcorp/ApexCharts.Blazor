@@ -89,6 +89,14 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label col-form-label-sm">Redraw On Window Resize</label>
+                <div class="col-sm-8">
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" @bind="chartRedrawOnWindowResize">
+                    </div>
+                </div>
+            </div>
                
             <button type="button" class="mt-2 mb-2 sidebar-label btn btn-outline-light" @onclick='(() => ToggleCollapsible("animations"))'>Animations</button>
 
@@ -106,6 +114,12 @@
 
             <div class="collapse" id="drop-shadow">
                 <DropShadowSettings @bind-DropShadow="config.Chart.DropShadow"></DropShadowSettings>
+            </div>
+
+            <button type="button" class="mt-2 mb-2 sidebar-label btn btn-outline-light" @onclick='(() => ToggleCollapsible("selection"))'>Selection</button>
+
+            <div class="collapse" id="selection">
+                <SelectionSettings @bind-Selection="config.Chart.Selection"></SelectionSettings>
             </div>
 
 
@@ -262,7 +276,7 @@
         get
         {
             if (config.Chart.RedrawOnParentResize == null)
-                return null;
+                return true;
 
             return config.Chart.RedrawOnParentResize;
         }
@@ -271,7 +285,20 @@
             config.Chart.RedrawOnParentResize = value;
         }
     }
+    private bool? chartRedrawOnWindowResize
+    {
+        get
+        {
+            if (config.Chart.RedrawOnWindowResize == null)
+                return true;
 
+            return config.Chart.RedrawOnWindowResize;
+        }
+        set
+        {
+            config.Chart.RedrawOnWindowResize = value;
+        }
+    }
 
     private ChartConfiguration config = new ChartConfiguration()
     .SetChart(

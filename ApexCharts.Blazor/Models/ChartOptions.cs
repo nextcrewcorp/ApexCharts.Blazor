@@ -44,6 +44,12 @@ namespace ApexCharts.Blazor.Models
         public bool? RedrawOnParentResize { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? RedrawOnWindowResize { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Selection Selection { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Width { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -134,6 +140,18 @@ namespace ApexCharts.Blazor.Models
         public ChartOptions SetRedrawOnParentResize(bool? redrawOnParentResize)
         {
             RedrawOnParentResize = redrawOnParentResize;
+            return this;
+        }
+
+        public ChartOptions SetSelection(Selection selection)
+        {
+            Selection = selection;
+            return this;
+        }
+
+        public ChartOptions SetRedrawOnWindowResize(bool? redrawOnWindowResize)
+        {
+            RedrawOnWindowResize = redrawOnWindowResize;
             return this;
         }
 
