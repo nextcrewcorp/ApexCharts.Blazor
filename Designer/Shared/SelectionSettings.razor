@@ -19,11 +19,73 @@
         </select>
     </div>
 </div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Fill Color</label>
+    <div class="col-sm-8">
+        <input type="color" class="form-control form-control-sm" style="width:50px" @bind="fillColor">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Fill Opacity</label>
+    <div class="col-sm-8">
+        <input type="number" min="0.0" max="1.0" step="0.1" class="form-control form-control-sm" @bind="fillOpacity">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Stroke Width</label>
+    <div class="col-sm-8">
+        <input type="number" class="form-control form-control-sm" @bind="strokeWidth">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Stroke Dash Array</label>
+    <div class="col-sm-8">
+        <input type="number" class="form-control form-control-sm" @bind="strokeDashArray">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Stroke Color</label>
+    <div class="col-sm-8">
+        <input type="color" class="form-control form-control-sm" style="width:50px" @bind="strokeColor">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Stroke Opacity</label>
+    <div class="col-sm-8">
+        <input type="number" min="0.0" max="1.0" step="0.1" class="form-control form-control-sm" @bind="strokeOpacity">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">X-Axis Min</label>
+    <div class="col-sm-8">
+        <input type="number" class="form-control form-control-sm" @bind="xAxisMin">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">X-Axis Max</label>
+    <div class="col-sm-8">
+        <input type="number" class="form-control form-control-sm" @bind="xAxisMax">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Y-Axis Min</label>
+    <div class="col-sm-8">
+        <input type="number" class="form-control form-control-sm" @bind="yAxisMin">
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Y-Axis Max</label>
+    <div class="col-sm-8">
+        <input type="number" class="form-control form-control-sm" @bind="yAxisMax">
+    </div>
+</div>
 
 
 @code {
     [Parameter] public Selection Selection { get; set; }
     [Parameter] public EventCallback<Selection> SelectionChanged { get; set; }
+
+    private Selection construct = new Selection();
 
     private bool enabled
     {
@@ -32,7 +94,7 @@
             if (Selection != null)
                 return Selection.Enabled;
             else
-                return true;
+                return construct.Enabled;
         }
         set
         {
@@ -50,7 +112,7 @@
             if (Selection != null)
                 return Selection.Type;
             else
-                return Axis.X;
+                return construct.Type;
         }
         set
         {
@@ -61,4 +123,185 @@
             SelectionChanged.InvokeAsync(Selection);
         }
     }
+    private string fillColor
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.FillColor;
+            else
+                return construct.FillColor;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+                
+            Selection.FillColor = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+    private double fillOpacity
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.FillOpacity;
+            else
+                return construct.FillOpacity;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+                
+            Selection.FillOpacity = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+    private double strokeWidth
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.StrokeWidth;
+            else
+                return construct.StrokeWidth;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+                
+            Selection.StrokeWidth = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+    private double strokeDashArray
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.StrokeDashArray;
+            else
+                return construct.StrokeDashArray;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+                
+            Selection.StrokeDashArray = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+    private string strokeColor
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.StrokeColor;
+            else
+                return construct.StrokeColor;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+                
+            Selection.StrokeColor = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+    private double strokeOpacity
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.StrokeOpacity;
+            else
+                return construct.StrokeOpacity;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+                
+            Selection.StrokeOpacity = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+    private double xAxisMin
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.XAxisMin;
+            else
+                return construct.XAxisMin;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+                
+            Selection.XAxisMin = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+    private double xAxisMax
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.XAxisMax;
+            else
+                return construct.XAxisMax;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+
+            Selection.XAxisMax = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+    private double yAxisMin
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.YAxisMin;
+            else
+                return construct.YAxisMin;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+
+            Selection.YAxisMin = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+    private double yAxisMax
+    {
+        get
+        {
+            if (Selection != null)
+                return Selection.YAxisMax;
+            else
+                return construct.YAxisMax;
+        }
+        set
+        {
+            if (Selection == null)
+                Selection = new Selection();
+
+            Selection.YAxisMax = value;
+            SelectionChanged.InvokeAsync(Selection);
+        }
+    }
+
 }

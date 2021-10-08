@@ -122,6 +122,11 @@
                 <SelectionSettings @bind-Selection="config.Chart.Selection"></SelectionSettings>
             </div>
 
+            <button type="button" class="mt-2 mb-2 sidebar-label btn btn-outline-light" @onclick='(() => ToggleCollapsible("sparkline"))'>Sparkline</button>
+
+            <div class="collapse" id="sparkline">
+                <SparklineSettings @bind-Sparkline="config.Chart.Sparkline"></SparklineSettings>
+            </div>
 
             <button type="button" class="mt-2 mb-2 sidebar-label btn btn-outline-light" @onclick='(() => ToggleCollapsible("zoom"))'>Zoom</button>
 

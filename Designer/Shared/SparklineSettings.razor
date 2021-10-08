@@ -1,0 +1,32 @@
+﻿<div class="form-group row">
+    <label class="col-sm-4 col-form-label col-form-label-sm">Enabled</label>
+    <div class="col-sm-8">
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" @bind="enabled">
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Sparkline Sparkline { get; set; }
+    [Parameter] public EventCallback<Sparkline> SparklineChanged { get; set; }
+
+    private bool enabled
+    {
+        get
+        {
+            if (Sparkline != null)
+                return Sparkline.Enabled;
+            else
+                return false;
+        }
+        set
+        {
+            if (Sparkline == null)
+                Sparkline = new Sparkline();
+                
+            Sparkline.Enabled = value;
+            SparklineChanged.InvokeAsync(Sparkline);
+        }
+    }
+}
