@@ -46,6 +46,9 @@ namespace ApexCharts.Blazor.Models
         public FillOptions Fill { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Theme Theme { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public TooltipOptions Tooltip { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -128,6 +131,12 @@ namespace ApexCharts.Blazor.Models
         public ChartConfiguration SetFill(FillOptions fill)
         {
             Fill = fill;
+            return this;
+        }
+
+        public ChartConfiguration SetTheme(Theme theme)
+        {
+            Theme = theme;
             return this;
         }
 
